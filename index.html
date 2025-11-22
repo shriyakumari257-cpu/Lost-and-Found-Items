@@ -1,0 +1,319 @@
+<!--<!DOCTYPE html>
+<html>
+<head>
+    <title>Lost and Found</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <img src="https://tse2.mm.bing.net/th/id/OIP.-eGASBfevO1HJUCBJADCeAHaB2?pid=Api&P=0&h=180"alt="random image"
+    <br>
+        <h1>Lost and Found Portal </h1>
+       <nav>
+            <a href="index.html">Home</a>
+            <a href="lost.html">Report Lost Item</a>
+            <a href="found.html">Report Found Item</a>
+        </nav>
+    </header>
+
+    <section class="container">
+        <h2>Welcome!</h2>
+        <p>This is a simple Lost and Found system.  
+           You can report lost items or report items you have found.</p>
+    </section>
+    <!DOCTYPE html>
+<html>
+<head>
+    <title>Report Lost Item</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Report Lost Item</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="lost.html">Report Lost</a>
+        <a href="found.html">Report Found</a>
+    </nav>
+</header>
+
+<section class="container">
+    <form id="lostForm">
+        <label>Item Name:</label>
+        <input type="text" id="lostName" required>
+
+        <label>Description:</label>
+        <textarea id="lostDescription" required></textarea>
+
+        <label>Your Contact:</label>
+        <input type="text" id="lostContact" required>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <p id="lostMessage"></p>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
+
+
+</body>
+</html>
+
+</body>
+</html>-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<header>
+        <img src="https://tse2.mm.bing.net/th/id/OIP.-eGASBfevO1HJUCBJADCeAHaB2?pid=Api&P=0&h=180"alt="random image"
+    <br>
+    </header>
+<title>Lost & Found Portal</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f6fa;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        background: #2a4d87;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-size: 24px;
+    }
+    .container {
+        width: 90%;
+        max-width: 1000px;
+        margin: 20px auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    button {
+        background: #2a4d87;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+    button:hover { background: #1e3661; }
+
+    .item-card {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-top: 10px;
+        border-radius: 8px;
+        background: #fafafa;
+    }
+    .item-card img {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+    .flex {
+        display: flex;
+        gap: 15px;
+    }
+</style>
+</head>
+<body>
+
+<header>Campus Lost & Found Platform</header>
+
+<div class="container">
+
+    <h2>Post Lost/Found Item</h2>
+
+    <label>Item Status</label>
+    <select id="status">
+        <option value="Lost">Lost</option>
+        <option value="Found">Found</option>
+    </select>
+
+    <label>Item Category</label>
+    <select id="category">
+        <option>Electronics</option>
+        <option>ID Card</option>
+        <option>Books</option>
+        <option>Clothing</option>
+        <option>Accessories</option>
+        <option>Others</option>
+    </select>
+    <label>Item location</label>
+    <select id="location">
+        <option>1st floor</option>
+        <option>2nd floor</option>
+        <option>3rd floor</option>
+        <option>4th floor</option>
+        <option>5th floor</option>
+        <option>6th floor</option>
+        <option>Playground</option>
+        <option>conference hall</option>
+    </select>
+
+    <label>Description</label>
+    <textarea id="description"></textarea>
+
+    <label>Location</label>
+    <input type="text" id="location">
+
+    <label>Date</label>
+    <input type="date" id="date">
+
+    <label>Upload Photo</label>
+    <input type="file" id="imageInput" accept="image/*">
+
+    <label>Contact (Email/Phone)</label>
+    <input type="text" id="contact">
+
+    <button onclick="addItem()">Submit Post</button>
+
+</div>
+
+<div class="container">
+
+    <h2>Search Items</h2>
+
+    <label>Filter by Category</label>
+    <select id="filterCategory">
+        <option value="">All</option>
+        <option>Electronics</option>
+        <option>ID Card</option>
+        <option>Books</option>
+        <option>Clothing</option>
+        <option>Accessories</option>
+        <option>Others</option>
+    </select>
+
+    <label>Filter by Location</label>
+    <input type="text" id="filterLocation">
+
+    <label>Filter by Status</label>
+    <select id="filterStatus">
+        <option value="">All</option>
+        <option>Lost</option>
+        <option>Found</option>
+    </select>
+
+    <button onclick="displayItems()">Search</button>
+
+    <h3>Results</h3>
+    <div id="results"></div>
+
+</div>
+
+<script>
+let items = JSON.parse(localStorage.getItem("lostFoundItems") || "[]");
+
+function addItem() {
+    let status = document.getElementById("status").value;
+    let category = document.getElementById("category").value;
+    let description = document.getElementById("description").value;
+    let location = document.getElementById("location").value;
+    let date = document.getElementById("date").value;
+    let contact = document.getElementById("contact").value;
+    let imageFile = document.getElementById("imageInput").files[0];
+
+    if (!description || !location || !date || !contact) {
+        alert("Please fill all required fields!");
+        return;
+    }
+
+    let reader = new FileReader();
+    reader.onload = function(e) {
+        let item = {
+            status,
+            category,
+            description,
+            location,
+            date,
+            contact,
+            image: e.target.result,
+            id: Date.now()
+        };
+
+        items.push(item);
+        localStorage.setItem("lostFoundItems", JSON.stringify(items));
+
+        checkForMatch(item);
+        alert("Item posted successfully!");
+        displayItems();
+    };
+
+    if (imageFile) {
+        reader.readAsDataURL(imageFile);
+    } else {
+        reader.onload({ target: { result: "" } });
+    }
+}
+
+function checkForMatch(newItem) {
+    items.forEach(oldItem => {
+        if (
+            oldItem.category === newItem.category &&
+            oldItem.location.toLowerCase() === newItem.location.toLowerCase() &&
+            oldItem.status !== newItem.status
+        ) {
+            alert(`Match found!\nAnother user posted a "${oldItem.status}" item in the same category.`);
+        }
+    });
+}
+
+function displayItems() {
+    let results = document.getElementById("results");
+    results.innerHTML = "";
+
+    let filterCategory = document.getElementById("filterCategory").value;
+    let filterLocation = document.getElementById("filterLocation").value.toLowerCase();
+    let filterStatus = document.getElementById("filterStatus").value;
+
+    let filtered = items.filter(item => 
+        (!filterCategory || item.category === filterCategory) &&
+        (!filterLocation || item.location.toLowerCase().includes(filterLocation)) &&
+        (!filterStatus || item.status === filterStatus)
+    );
+
+    filtered.forEach(item => {
+        let div = document.createElement("div");
+        div.className = "item-card";
+
+        div.innerHTML = `
+            <div class="flex">
+                <img src="${item.image}" alt="Item Image">
+                <div>
+                    <p><b>Status:</b> ${item.status}</p>
+                    <p><b>Category:</b> ${item.category}</p>
+                    <p><b>Description:</b> ${item.description}</p>
+                    <p><b>Location:</b> ${item.location}</p>
+                    <p><b>Date:</b> ${item.date}</p>
+                    <p><b>Contact:</b> ${item.contact}</p>
+                </div>
+            </div>
+        `;
+
+        results.appendChild(div);
+    });
+}
+</script>
+
+</body>
+</html>
